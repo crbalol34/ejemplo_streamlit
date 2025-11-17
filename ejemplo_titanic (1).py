@@ -24,17 +24,18 @@ with st.sidebar:
     st.write("Bins=", div)
 
 # Desplegamos un histograma con los datos del eje X
-fig, ax = plt.subplots(1, 2, figsize=(10, 3))
+fig, ax = plt.subplots(1, 3, figsize=(15, 3))
+
+# Gráfico 1: Histograma
 ax[0].hist(df["Age"], bins=div)
 ax[0].set_xlabel("Edad")
 ax[0].set_ylabel("Frecuencia")
 ax[0].set_title("Histograma de edades")
 
-# Tomando datos para hombres y contando la cantidad
+# Gráfico 2: Total hombres y mujeres
 df_male = df[df["Sex"] == "male"]
 cant_male = len(df_male)
 
-# Tomando datos para mujeres y contando la cantidad
 df_female = df[df["Sex"] == "female"]
 cant_female = len(df_female)
 
@@ -42,6 +43,15 @@ ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color = "red")
 ax[1].set_xlabel("Sexo")
 ax[1].set_ylabel("Cantidad")
 ax[1].set_title('Distribución de hombres y mujeres')
+
+# --- NUEVO GRÁFICO 3: Sobrevivientes agrupados por sexo ---
+sob_male = len(df[(df["Sex"] == "male") & (df["Survived"] == 1)])
+sob_female = len(df[(df["Sex"] == "female") & (df["Survived"] == 1)])
+
+ax[2].bar(["Masculino", "Femenino"], [sob_male, sob_female], color = "navy")
+ax[2].set_xlabel("Sexo")
+ax[2].set_ylabel("Cantidad Sobrevivientes")
+ax[2].set_title('Sobrevivientes por Sexo')
 
 # Desplegamos el gráfico
 st.pyplot(fig)
