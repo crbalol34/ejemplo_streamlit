@@ -52,41 +52,4 @@ st.write("""
 # Graficamos una tabla
 st.table(df.head())
 
-with st.sidebar:
-    st.write("# Opciones")
-    div = st.slider('Número de bins:', 0, 10, 2)
-    st.write("Bins=", div)
 
-# --- Aumentamos a 3 columnas para añadir el nuevo gráfico ---
-fig, ax = plt.subplots(1, 3, figsize=(16, 5))
-
-# --- GRÁFICO 1: Histograma de Edad ---
-ax[0].hist(df["Age"], bins=div, color='skyblue', edgecolor='black')
-ax[0].set_xlabel("Edad")
-ax[0].set_ylabel("Frecuencia")
-ax[0].set_title("Histograma de edades")
-
-# --- GRÁFICO 2: Total Hombres vs Mujeres (Tu código original) ---
-df_male = df[df["Sex"] == "male"]
-cant_male = len(df_male)
-df_female = df[df["Sex"] == "female"]
-cant_female = len(df_female)
-
-ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color="red")
-ax[1].set_xlabel("Sexo")
-ax[1].set_ylabel("Cantidad")
-ax[1].set_title('Distribución Total')
-
-
-sobrevivientes = df[df['Survived'] == 1].groupby('Sex')['PassengerId'].count()
-
-
-ax[2].bar(sobrevivientes.index, sobrevivientes.values, color="green")
-ax[2].set_xlabel("Sexo")
-ax[2].set_ylabel("Cantidad Sobrevivientes")
-ax[2].set_title('Sobrevivientes Agrupados por Sexo')
-
-st.pyplot(fig)
-
-st.write("## Muestrar los datos cargados")
-st.table(df.head())
