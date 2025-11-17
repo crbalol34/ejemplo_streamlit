@@ -70,8 +70,8 @@ ax[1].set_ylabel("Cantidad")
 ax[1].set_title('Distribución Total')
 
 # Gráfico 3: Sobrevivientes
-sob_male = len(df_filtrado[(df_filtrado["Sex"] == "male") & (df_filtrado["Survived"] == 1)])
-sob_female = len(df_filtrado[(df_filtrado["Sex"] == "female") & (df_filtrado["Survived"] == 1)])
+sob_male = len(df_filtrado[(df_filtrado["Sex"] == "Hombre") & (df_filtrado["Survived"] == 1)])
+sob_female = len(df_filtrado[(df_filtrado["Sex"] == "Mujer") & (df_filtrado["Survived"] == 1)])
 ax[2].bar(["Masculino", "Femenino"], [sob_male, sob_female], color="gold")
 ax[2].set_xlabel("Sexo")
 ax[2].set_title('Sobrevivientes por Sexo')
