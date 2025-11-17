@@ -62,16 +62,16 @@ ax[0].set_ylabel("Frecuencia")
 ax[0].set_title("Histograma de edades")
 
 # Gráfico 2: Distribución Total
-cant_male = len(df_filtrado[df_filtrado["Sex"] == "Hombre"])
-cant_female = len(df_filtrado[df_filtrado["Sex"] == "Mujer"])
-ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color="red")
+cant_hombres = len(df_filtrado[df_filtrado["Sexo"] == "Hombre"])
+cant_mujeres = len(df_filtrado[df_filtrado["Sexo"] == "Mujer"])
+ax[1].bar(["Masculino", "Femenino"], [cant_hombres, cant_mujeres], color="red")
 ax[1].set_xlabel("Sexo")
 ax[1].set_ylabel("Cantidad")
 ax[1].set_title('Distribución Total')
 
 # Gráfico 3: Sobrevivientes
-sob_male = len(df_filtrado[(df_filtrado["Sex"] == "Hombre") & (df_filtrado["Survived"] == 1)])
-sob_female = len(df_filtrado[(df_filtrado["Sex"] == "Mujer") & (df_filtrado["Survived"] == 1)])
+sob_male = len(df_filtrado[(df_filtrado["Sex"] == "Hombre") & (df_filtrado["Sobrevivió"] == 1)])
+sob_female = len(df_filtrado[(df_filtrado["Sex"] == "Mujer") & (df_filtrado["Sobrevivió"] == 1)])
 ax[2].bar(["Masculino", "Femenino"], [sob_male, sob_female], color="gold")
 ax[2].set_xlabel("Sexo")
 ax[2].set_title('Sobrevivientes por Sexo')
@@ -90,11 +90,11 @@ df_plot["Survived"] = df_plot["Survived"].map({0: "No sobrevivió", 1: "Sobreviv
 # Creamos el gráfico 3D
 fig_3d = px.scatter_3d(
     df_plot, 
-    x='Age',           # Eje X: Edad
-    y='Fare',          # Eje Y: Precio del ticket
-    z='Pclass',        # Eje Z: Clase (Altura)
-    color='Survived',  # Color: Si sobrevivió o no
-    symbol='Sex',      # Símbolo: Hombre o Mujer (Círculo o Diamante)
+    x='Edad',           # Eje X: Edad
+    y='Tarifa',          # Eje Y: Precio del ticket
+    z='Clase',        # Eje Z: Clase (Altura)
+    color='Sobrevivió',  # Color: Si sobrevivió o no
+    symbol='Sexo',      # Símbolo: Hombre o Mujer (Círculo o Diamante)
     opacity=0.7,       # Transparencia para ver los puntos de atrás
     color_discrete_map={"Sobrevivió": "green", "No sobrevivió": "red"} # Colores personalizados
 )
