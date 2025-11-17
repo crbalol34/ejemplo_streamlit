@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import matplotlib.pyplot as plt
 # Carga el archivo CSV "database_titanic.csv" en un DataFrame de pandas.
 df = pd.read_csv("database_titanic.csv")
 
@@ -17,13 +17,13 @@ with st.sidebar:
     
     # Crea un control deslizante (slider) que permite al usuario seleccionar un número de bins
     # en el rango de 0 a 10, con un valor predeterminado de 2.
-    div = st.slider('Número de bins:', 1, 10, 2)
+    div = st.slider('Número de bins:', 0, 20, 10)
     
     # Muestra el valor actual del slider en la barra lateral.
     st.write("Bins=", div)
 
 # Desplegamos un histograma con los datos del eje X
-fig, ax = px.subplots(1, 3, figsize=(15, 3))
+fig, ax = plt.subplots(1, 3, figsize=(15, 3))
 
 # Gráfico 1: Histograma
 ax[0].hist(df["Age"], bins=div)
