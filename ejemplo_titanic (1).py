@@ -1,13 +1,13 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
 
 # Carga el archivo CSV "database_titanic.csv" en un DataFrame de pandas.
 df = pd.read_csv("database_titanic.csv")
 
 # Muestra un título y una descripción en la aplicación Streamlit.
 st.write("""
-# La app interactiva más bacán hecha por papicris
+# La mejor app interactiva ¡Hecha por cris!
 ## Gráficos usando la base de datos del Titanic
 """)
 
@@ -24,7 +24,7 @@ with st.sidebar:
     st.write("Bins=", div)
 
 # Desplegamos un histograma con los datos del eje X
-fig, ax = plt.subplots(1, 3, figsize=(15, 3))
+fig, ax = px.subplots(1, 3, figsize=(15, 3))
 
 # Gráfico 1: Histograma
 ax[0].hist(df["Age"], bins=div)
