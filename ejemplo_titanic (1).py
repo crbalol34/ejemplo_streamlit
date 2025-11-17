@@ -53,4 +53,4 @@ st.write("---")
 
 # --- TUS GRÁFICOS ORIGINALES (MATPLOTLIB) ---
 st.write("### 📊 Resumen General (Estático)")
-fig, ax = plt.subplots(1, 3, figsize=(15
+fig, ax = plt.subplots(1, 3, figsize=(15)
