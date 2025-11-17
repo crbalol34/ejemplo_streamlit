@@ -44,11 +44,11 @@ ax[1].set_xlabel("Sexo")
 ax[1].set_ylabel("Cantidad")
 ax[1].set_title('Distribución de hombres y mujeres')
 
-# --- NUEVO GRÁFICO 3: Sobrevivientes agrupados por sexo ---
+# Gráfico 3: Sobrevivientes agrupados por sexo 
 sob_male = len(df[(df["Sex"] == "male") & (df["Survived"] == 1)])
 sob_female = len(df[(df["Sex"] == "female") & (df["Survived"] == 1)])
 
-ax[2].bar(["Masculino", "Femenino"], [sob_male, sob_female], color = "navy")
+ax[2].bar(["Masculino", "Femenino"], [sob_male, sob_female], color = "yellow")
 ax[2].set_xlabel("Sexo")
 ax[2].set_ylabel("Cantidad Sobrevivientes")
 ax[2].set_title('Sobrevivientes por Sexo')
@@ -57,7 +57,7 @@ ax[2].set_title('Sobrevivientes por Sexo')
 st.pyplot(fig)
 
 st.write("""
-## Muestra de datos cargados
+## Mostrar los datos cargados
 """)
 # Graficamos una tabla
 st.table(df.head())
