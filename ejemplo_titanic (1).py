@@ -62,8 +62,8 @@ ax[0].set_ylabel("Frecuencia")
 ax[0].set_title("Histograma de edades")
 
 # Gráfico 2: Distribución Total
-cant_male = len(df_filtrado[df_filtrado["Sex"] == "male"])
-cant_female = len(df_filtrado[df_filtrado["Sex"] == "female"])
+cant_male = len(df_filtrado[df_filtrado["Sex"] == "Hombre"])
+cant_female = len(df_filtrado[df_filtrado["Sex"] == "Mujer"])
 ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color="red")
 ax[1].set_xlabel("Sexo")
 ax[1].set_ylabel("Cantidad")
