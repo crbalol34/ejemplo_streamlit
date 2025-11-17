@@ -23,7 +23,7 @@ with st.sidebar:
     st.header("⚙️ Configuración")
     
     # Slider de Bins (Lo que ya tenías)
-    div = st.slider('Número de bins:', 0, 50, 10)
+    div = st.slider('Número de bins:', 0, 20, 10)
     
     st.write("---")
     
