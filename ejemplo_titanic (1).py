@@ -94,8 +94,8 @@ df_plot["Sex"] = df_plot["Sex"].map({"male": "Masculino", "female": "Femenino"})
 
 fig_3d = px.scatter_3d(
     df_plot, 
-    x='Age', y='Fare', z='Pclass',        
-    color='Survived', symbol='Sex', opacity=0.7,       
+    x='Edad', y='Tarifa', z='Clase',        
+    color='Sobrevivió', symbol='Sex', opacity=0.7,       
     color_discrete_map={"Sobrevivió": "green", "No sobrevivió": "red"}
 )
 fig_3d.update_layout(margin=dict(l=0, r=0, b=0, t=0), height=500)
