@@ -36,7 +36,7 @@ with st.sidebar:
     
     st.write("---")
     # Botón divertido
-    if st.button("¡Presióname para una sorpresa!"):
+    if st.button("¡Presiona aquí!"):
         st.balloons()
 
 # Filtrar el DataFrame según la selección del usuario
@@ -55,16 +55,6 @@ col2.metric("Sobrevivientes", total_sobrevivientes)
 col3.metric("Tasa de Supervivencia", f"{pct_supervivencia:.1f}%")
 # Slider para controlar la frecuencia
 frecuencia = st.slider('Frecuencia', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-
-# Actualizar los datos con la frecuencia seleccionada
-# Actualizar el gráfico
-ax.plot(x, y)
-ax.set_title(f'Función Seno con frecuencia {frecuencia}')
-ax.set_xlabel('Eje X')
-ax.set_ylabel('Eje Y')
-
-# Mostrar el gráfico interactivo
-st.pyplot(fig)
 st.write("---")
 
 # --- PESTAÑAS PARA LOS GRÁFICOS (TABS) ---
