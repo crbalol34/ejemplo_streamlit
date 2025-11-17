@@ -24,7 +24,7 @@ with st.sidebar:
     
     # Slider de Bins (Lo que ya tenías)
     div = st.slider('Número de bins:', 0, 20, 10)
-    fig, ax = plt.subplots(figsize=(12, 4))
+    fig, ax = plt.subplots(figsize=(5, 3))
     
     st.write("---")
     
