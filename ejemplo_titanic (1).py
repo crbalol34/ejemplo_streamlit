@@ -58,7 +58,6 @@ frecuencia = st.slider('Frecuencia', min_value=0.1, max_value=5.0, value=1.0, st
 
 # Actualizar los datos con la frecuencia seleccionada
 # Actualizar el gráfico
-ax.clear()
 ax.plot(x, y)
 ax.set_title(f'Función Seno con frecuencia {frecuencia}')
 ax.set_xlabel('Eje X')
