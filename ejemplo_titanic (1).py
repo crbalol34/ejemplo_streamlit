@@ -1,99 +1,110 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.express as px  # <--- IMPORTANTE: Nueva librería para el 3D
 
-# 1. CONFIGURACIÓN DE PÁGINA (Esto le da el título a la pestaña del navegador)
+# 1. CONFIGURACIÓN DE PÁGINA
 st.set_page_config(
     page_title="Titanic App de Cris",
-    page_icon="🚢",
-    layout="small"
+    layout="wide",
+    page_icon="🚢"
 )
 
-# Carga el archivo CSV
+# Carga de datos
 df = pd.read_csv("database_titanic.csv")
 
-# Título principal
+# Título
 st.write("""
 # 🚢 La mejor app interactiva ¡Hecha por Cris!
 ## Análisis visual del Titanic
 """)
 
-# --- BARRA LATERAL (SIDEBAR) ---
+# --- SIDEBAR ---
 with st.sidebar:
-    st.header("⚙️ Configuración")
+    st.write("# Opciones")
+    div = st.slider('Número de bins:', 0, 20, 10)
     
-    # Slider de Bins (Lo que ya tenías)
-    div = st.slider('Número de bins:', 0, 20, 10)    
     st.write("---")
-    
-    # NUEVO: Filtro por Clase
-    st.write("Filtrar por Clase de Pasajero:")
+    st.write("Filtrar por Clase:")
     opcion_clase = st.multiselect(
-        "Selecciona las clases:",
+        "Clases a mostrar:",
         options=[1, 2, 3],
-        default=[1, 2, 3] # Por defecto todas seleccionadas
+        default=[1, 2, 3]
     )
     
     st.write("---")
-    # Botón divertido
-    if st.button("¡Presiona aquí!"):
+    if st.button("¡Sorpresa!"):
         st.balloons()
 
-# Filtrar el DataFrame según la selección del usuario
+# Filtrado de datos
 df_filtrado = df[df["Pclass"].isin(opcion_clase)]
 
-# --- LAYOUT DE MÉTRICAS (KPIs) ---
-# Usamos columnas para mostrar números grandes
+# --- MÉTRICAS (KPIs) ---
 col1, col2, col3 = st.columns(3)
-total_pasajeros = len(df_filtrado)
-total_sobrevivientes = len(df_filtrado[df_filtrado["Survived"] == 1])
-# Calcular porcentaje evitando división por cero
-pct_supervivencia = (total_sobrevivientes / total_pasajeros * 100) if total_pasajeros > 0 else 0
+total_pas = len(df_filtrado)
+total_sob = len(df_filtrado[df_filtrado['Survived'] == 1])
+pct_sob = (total_sob / total_pas * 100) if total_pas > 0 else 0
 
-col1.metric("Total Pasajeros", total_pasajeros)
-col2.metric("Sobrevivientes", total_sobrevivientes)
-col3.metric("Tasa de Supervivencia", f"{pct_supervivencia:.1f}%")
+col1.metric("Total Pasajeros", total_pas)
+col2.metric("Sobrevivientes", total_sob)
+col3.metric("Tasa Supervivencia", f"{pct_sob:.1f}%")
 
 st.write("---")
 
-# --- PESTAÑAS PARA LOS GRÁFICOS (TABS) ---
-# Esto organiza mucho mejor tu visualización
-tab1, tab2, tab3 = st.tabs(["🎂 Edades", "👫 Distribución por Sexo", "🟢 Sobrevivientes"])
+# --- TUS GRÁFICOS ORIGINALES (MATPLOTLIB) ---
+st.write("### 📊 Resumen General (Estático)")
+fig, ax = plt.subplots(1, 3, figsize=(15, 3))
 
-with tab1:
-    st.header("Histograma de Edades")
-    # Creamos figura solo para este gráfico
-    fig1, ax1 = plt.subplots()
-    ax1.hist(df_filtrado["Age"], bins=div, color="skyblue", edgecolor="black")
-    ax1.set_xlabel("Edad")
-    ax1.set_ylabel("Frecuencia")
-    st.pyplot(fig1)
+# Gráfico 1: Histograma
+ax[0].hist(df_filtrado["Age"], bins=div, color="skyblue", edgecolor="black")
+ax[0].set_xlabel("Edad")
+ax[0].set_ylabel("Frecuencia")
+ax[0].set_title("Histograma de edades")
 
-with tab2:
-    st.header("Total Hombres y Mujeres")
-    # Cálculo dinámico basado en el filtro
-    cant_male = len(df_filtrado[df_filtrado["Sex"] == "male"])
-    cant_female = len(df_filtrado[df_filtrado["Sex"] == "female"])
-    
-    fig2, ax2 = plt.subplots()
-    ax2.bar(["Masculino", "Femenino"], [cant_male, cant_female], color="red")
-    ax2.set_ylabel("Cantidad")
-    st.pyplot(fig2)
+# Gráfico 2: Distribución Total
+cant_male = len(df_filtrado[df_filtrado["Sex"] == "male"])
+cant_female = len(df_filtrado[df_filtrado["Sex"] == "female"])
+ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color="red")
+ax[1].set_xlabel("Sexo")
+ax[1].set_ylabel("Cantidad")
+ax[1].set_title('Distribución Total')
 
-with tab3:
-    st.header("¿Quiénes sobrevivieron más?")
-    # Lógica para sobrevivientes
-    sob_male = len(df_filtrado[(df_filtrado["Sex"] == "male") & (df_filtrado["Survived"] == 1)])
-    sob_female = len(df_filtrado[(df_filtrado["Sex"] == "female") & (df_filtrado["Survived"] == 1)])
-    
-    fig3, ax3 = plt.subplots()
-    ax3.bar(["Masculino", "Femenino"], [sob_male, sob_female], color="gold") # Cambié a gold para que se vea mejor
-    ax3.set_ylabel("Cantidad Sobrevivientes")
-    st.pyplot(fig3)
+# Gráfico 3: Sobrevivientes
+sob_male = len(df_filtrado[(df_filtrado["Sex"] == "male") & (df_filtrado["Survived"] == 1)])
+sob_female = len(df_filtrado[(df_filtrado["Sex"] == "female") & (df_filtrado["Survived"] == 1)])
+ax[2].bar(["Masculino", "Femenino"], [sob_male, sob_female], color="gold")
+ax[2].set_xlabel("Sexo")
+ax[2].set_title('Sobrevivientes por Sexo')
 
-# --- DATA EXPANDER ---
-# Ocultamos la tabla para que no ocupe espacio visual innecesario
+plt.tight_layout()
+st.pyplot(fig)
+
+# --- NUEVO: GRÁFICO 3D INTERACTIVO (PLOTLY) ---
 st.write("---")
-with st.expander("📂 Ver datos detallados (Click para desplegar)"):
-    st.write("Estos son los primeros 10 registros de tu selección:")
-    st.table(df_filtrado.head(10))
+st.write("### 🧊 Explorador 3D: Edad vs Tarifa vs Clase")
+
+# Convertimos Survived a string para que el color sea discreto (Categoría) y no continuo
+df_plot = df_filtrado.copy()
+df_plot["Survived"] = df_plot["Survived"].map({0: "No sobrevivió", 1: "Sobrevivió"})
+
+# Creamos el gráfico 3D
+fig_3d = px.scatter_3d(
+    df_plot, 
+    x='Age',           # Eje X: Edad
+    y='Fare',          # Eje Y: Precio del ticket
+    z='Pclass',        # Eje Z: Clase (Altura)
+    color='Survived',  # Color: Si sobrevivió o no
+    symbol='Sex',      # Símbolo: Hombre o Mujer (Círculo o Diamante)
+    opacity=0.7,       # Transparencia para ver los puntos de atrás
+    color_discrete_map={"Sobrevivió": "green", "No sobrevivió": "red"} # Colores personalizados
+)
+
+# Ajustamos el tamaño inicial para que se vea bien en pantalla completa
+fig_3d.update_layout(margin=dict(l=0, r=0, b=0, t=0), height=500)
+
+# Mostramos el gráfico
+st.plotly_chart(fig_3d, use_container_width=True)
+
+# --- TABLA ---
+with st.expander("📂 Ver datos detallados"):
+    st.table(df_filtrado.head())
