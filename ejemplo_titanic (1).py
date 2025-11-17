@@ -53,8 +53,7 @@ pct_supervivencia = (total_sobrevivientes / total_pasajeros * 100) if total_pasa
 col1.metric("Total Pasajeros", total_pasajeros)
 col2.metric("Sobrevivientes", total_sobrevivientes)
 col3.metric("Tasa de Supervivencia", f"{pct_supervivencia:.1f}%")
-# Slider para controlar la frecuencia
-frecuencia = st.slider('Frecuencia', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
+
 st.write("---")
 
 # --- PESTAÑAS PARA LOS GRÁFICOS (TABS) ---
