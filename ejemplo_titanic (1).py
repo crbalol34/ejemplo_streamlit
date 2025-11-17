@@ -23,9 +23,7 @@ with st.sidebar:
     st.header("⚙️ Configuración")
     
     # Slider de Bins (Lo que ya tenías)
-    div = st.slider('Número de bins:', 0, 20, 10)
-    fig, ax = plt.subplots(figsize=(5, 3))
-    
+    div = st.slider('Número de bins:', 0, 20, 10)    
     st.write("---")
     
     # NUEVO: Filtro por Clase
@@ -55,7 +53,21 @@ pct_supervivencia = (total_sobrevivientes / total_pasajeros * 100) if total_pasa
 col1.metric("Total Pasajeros", total_pasajeros)
 col2.metric("Sobrevivientes", total_sobrevivientes)
 col3.metric("Tasa de Supervivencia", f"{pct_supervivencia:.1f}%")
+# Slider para controlar la frecuencia
+frecuencia = st.slider('Frecuencia', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
 
+# Actualizar los datos con la frecuencia seleccionada
+y = np.sin(frecuencia * x)
+
+# Actualizar el gráfico
+ax.clear()
+ax.plot(x, y)
+ax.set_title(f'Función Seno con frecuencia {frecuencia}')
+ax.set_xlabel('Eje X')
+ax.set_ylabel('Eje Y')
+
+# Mostrar el gráfico interactivo
+st.pyplot(fig)
 st.write("---")
 
 # --- PESTAÑAS PARA LOS GRÁFICOS (TABS) ---
