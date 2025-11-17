@@ -57,8 +57,6 @@ col3.metric("Tasa de Supervivencia", f"{pct_supervivencia:.1f}%")
 frecuencia = st.slider('Frecuencia', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
 
 # Actualizar los datos con la frecuencia seleccionada
-y = np.sin(frecuencia * x)
-
 # Actualizar el gráfico
 ax.clear()
 ax.plot(x, y)
