@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-
+import matplotlib.pyplot as plt
 # Carga el archivo CSV "database_titanic.csv" en un DataFrame de pandas.
 df = pd.read_csv("database_titanic.csv")
 
@@ -24,7 +23,7 @@ with st.sidebar:
     st.write("Bins=", div)
 
 # Desplegamos un histograma con los datos del eje X
-fig, ax = px.subplots(1, 3, figsize=(15, 3))
+fig, ax = plt.subplots(1, 3, figsize=(15, 3))
 
 # Gráfico 1: Histograma
 ax[0].hist(df["Age"], bins=div)
